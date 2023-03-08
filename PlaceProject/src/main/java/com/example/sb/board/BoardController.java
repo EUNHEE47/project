@@ -158,11 +158,41 @@ public class BoardController {
 	 * board_detail에서 수정버튼 누르면 관련 타이틀, 콘텐트 값 form에 셋팅하고 modify_form으로 넘겨줘라
 	 */
 	@GetMapping("/modify/{bCode}")
-	public String boardModify(@PathVariable("bCode") Long bCode, BoardForm boardForm) {
+	public String boardModify(Model model, @PathVariable("bCode") Long bCode, BoardForm boardForm) {
 		BoardEntity boardEntity = boardService.getBoard(bCode);
 
 		boardForm.setTitle(boardEntity.getTitle());
 		boardForm.setContent(boardEntity.getContent());
+
+		/*
+		 * List<SearchPlace> pcode = new ArrayList<>();
+		 * 
+		 * for(int i=0; i<3; i++) {
+		 * 
+		 * SearchPlace s = new SearchPlace();
+		 * 
+		 * //boardEntity에 있는 메서드 불러오기 인덱스가 0이면 pCode1이 리턴되게끔 if(boardEntity.getPcode(i)
+		 * != null) { s = searchPlaceRepository.findBypCode(boardEntity.getPcode(i));
+		 * pcode.add(s); } } model.addAttribute("p", pcode);
+		 */
+
+		boardForm.setPcode1(boardEntity.getPCode1());
+		boardForm.setPcode2(boardEntity.getPCode2());
+		boardForm.setPcode3(boardEntity.getPCode3());
+
+		if (boardEntity.getPCode1() != null) {
+			SearchPlace p1 = searchPlaceRepository.findBypCode(boardForm.getPcode1());
+			model.addAttribute("p1", p1);
+		}
+
+		if (boardEntity.getPCode2() != null) {
+			SearchPlace p2 = searchPlaceRepository.findBypCode(boardForm.getPcode2());
+			model.addAttribute("p2", p2);
+		}
+		if (boardEntity.getPCode3() != null) {
+			SearchPlace p3 = searchPlaceRepository.findBypCode(boardForm.getPcode3());
+			model.addAttribute("p3", p3);
+		}
 
 		return "modify_form";
 	}

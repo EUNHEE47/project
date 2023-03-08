@@ -1,5 +1,4 @@
 
-
 // promotion
 let promotionCard = [
 	{ name: 'SUNGSU', memo: '성수동 카페거리' },
@@ -28,3 +27,13 @@ for (let i = 0; i < promotionCard.length; i++) {
 	
 	$('.p-cards').append(card);
 };
+
+
+
+
+// top btn
+const topBtn = document.querySelector('.top-btn');
+
+topBtn.addEventListener('click', function(){
+	window.scrollTo({top : 0, behavior : "smooth"});
+});
